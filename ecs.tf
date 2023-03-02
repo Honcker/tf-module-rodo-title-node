@@ -1,56 +1,6 @@
 
-resource "aws_ecr_repository" "rodo-title-proxy-repo" {
-  name         = "rodo-title-proxy-${local.node_slug}"
-  force_delete = local.is_ephemeral_env
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = local.default__tags
-}
-
-resource "aws_ecr_repository" "rodo-title-server-repo" {
-  name         = "rodo-title-server-${local.node_slug}"
-  force_delete = local.is_ephemeral_env
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = local.default__tags
-}
-
-resource "aws_ecr_repository" "rodo-title-storage-repo" {
-  name         = "rodo-title-storage-${local.node_slug}"
-  force_delete = local.is_ephemeral_env
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = local.default__tags
-}
-
-resource "aws_ecr_repository" "rodo-title-nft-repo" {
-  name         = "rodo-title-nft-${local.node_slug}"
-  force_delete = local.is_ephemeral_env
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = local.default__tags
-}
-
-resource "aws_ecr_repository" "rodo-title-handler-repo" {
-  name         = "rodo-title-handler-${local.node_slug}"
-  force_delete = local.is_ephemeral_env
-
-  image_scanning_configuration {
-    scan_on_push = true
-  }
-
-  tags = local.default__tags
+locals {
+  global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
 }
 
 resource "aws_ecs_cluster" "rodo-title-cluster" {
@@ -75,7 +25,8 @@ resource "aws_ecs_task_definition" "rodo-title-proxy-task" {
   container_definitions = jsonencode([
     {
       name   = "proxy"
-      image  = "${aws_ecr_repository.rodo-title-proxy-repo.repository_url}:latest"
+      image  = "${local.global_title_ecr_url}/rodo-title-proxy:${var.environment}_latest"
+
       cpu    = 256
       memory = 512
       portMappings = [
@@ -162,7 +113,7 @@ resource "aws_ecs_task_definition" "rodo-title-server-task" {
   container_definitions = jsonencode([
     {
       name   = "rodo-title-server"
-      image  = "${aws_ecr_repository.rodo-title-server-repo.repository_url}:latest"
+      image  = "${local.global_title_ecr_url}/rodo-title-server:${var.environment}_latest"
       cpu    = 512
       memory = 1024
       portMappings = [
@@ -244,7 +195,7 @@ resource "aws_ecs_task_definition" "rodo-title-storage-task" {
   container_definitions = jsonencode([
     {
       name   = "rodo-title-storage"
-      image  = "${aws_ecr_repository.rodo-title-storage-repo.repository_url}:latest"
+      image  = "${local.global_title_ecr_url}/rodo-title-storage:${var.environment}_latest"
       cpu    = 512
       memory = 1024
       portMappings = [
@@ -326,7 +277,7 @@ resource "aws_ecs_task_definition" "rodo-title-nft-task" {
   container_definitions = jsonencode([
     {
       name   = "rodo-title-nft"
-      image  = "${aws_ecr_repository.rodo-title-nft-repo.repository_url}:latest"
+      image  = "${local.global_title_ecr_url}/rodo-title-nft:${var.environment}_latest"
       cpu    = 512
       memory = 1024
       portMappings = [
@@ -502,7 +453,7 @@ resource "aws_ecs_task_definition" "rodo-title-handler-task" {
   container_definitions = jsonencode([
     {
       name   = "rodo-title-handler"
-      image  = "${aws_ecr_repository.rodo-title-handler-repo.repository_url}:latest"
+      image  = "${local.global_title_ecr_url}/rodo-title-handler:${var.environment}_latest"
       cpu    = 1024
       memory = 2048
       environment = [
