@@ -150,11 +150,11 @@ resource "aws_s3_bucket_public_access_block" "title-automation" {
 
 
 resource "aws_s3_object" "title-automation" {
-  for_each = fileset("${path.module}/automation/", "*")
+  for_each = fileset("${path.module}/lambda/", "*")
   bucket   = aws_s3_bucket.title-automation.id
 
   key    = each.value
-  source = "${path.module}/automation/${each.value}"
+  source = "${path.module}/lambda/${each.value}"
 
-  etag = filemd5("${path.module}/automation/${each.value}")
+  etag = filemd5("${path.module}/lambda/${each.value}")
 }
