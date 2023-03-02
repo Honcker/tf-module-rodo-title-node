@@ -1,8 +1,4 @@
 
-locals {
-  global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
-}
-
 resource "aws_ecs_cluster" "rodo-title-cluster" {
   name = "rodo-title-${local.node_slug}"
 

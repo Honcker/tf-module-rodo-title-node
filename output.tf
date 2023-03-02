@@ -33,29 +33,6 @@ output "camunda-db-username" {
   value       = aws_db_instance.rodo-postgres-camunda.username
 }
 
-output "rodo-title-server-ecr" {
-  description = "Rodo title server ecr"
-  value       = aws_ecr_repository.rodo-title-server-repo.repository_url
-}
-
-# output "rodo-title-lb-url" {
-#   description = "Rodo title load balancer url"
-#   value = aws_lb.rodo-title-lb.dns_name
-# }
-
-# output "rodo-title-cloudfront-url" {
-#   description = "Rodo title cloud front url"
-#   value = var.opt_cloudfront_enabled ? aws_cloudfront_distribution.s3_distribution[0].domain_name : "** CF deployment skipped **"
-# }
-
-# output "cloudfront-cert-validation" {
-#   value = aws_acm_certificate.cloudfront-cert.domain_validation_options
-# }
-
-# output "lb-cert-validation" {
-#   value = aws_acm_certificate.lb-cert.domain_validation_options
-# }
-
 output "entities_maintained" {
   value = {
     entities_to_maintain        = local.entities_to_maintain

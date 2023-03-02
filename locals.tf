@@ -68,4 +68,6 @@ locals {
   ui_domain_names   = { for cfe in local.entities_to_maintain : cfe => "${local.cloudfronted_entities_names[cfe]}-ui.${local.base_subdomain}" }
   proxy_domain_name = "proxy.${local.base_subdomain}"
 
+  global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
+
 }
