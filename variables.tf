@@ -51,19 +51,26 @@ variable "node_ui_cfg" {
   type        = any
 }
 
-# Locals here are user-defined locals, like constants
-#   that can change, but shouldn't change as often as variables.
-# Locals in locals.tf are auto-constructed values.
-
-locals {
-  corda_vpc_principals = [
-    "arn:aws:iam::999147121268:root",
-    "arn:aws:iam::753268391212:root",
-    "arn:aws:iam::801625722682:root",
-  ]
+variable "network_trust_password_secret_arn" {
+  description = "the arn of a secretsmanager secret containing the network trust store password"
+  type        = string
+  nullable    = false
 }
 
-# corda_address is here because it was originally in tfvars, and looks like the port can vary ...
-locals {
-  corda_address = "${aws_instance.rodo-title-CorApp[0].private_ip}:${local.corda_ports["madison"]}"
+variable "corda_my_legal_name" {
+  description = "the corda legal name for the corda node"
+  type        = string
+  nullable    = false
+}
+
+variable "corda_my_email_address" {
+  description = "the email address to attach to the corda node"
+  type        = string
+  nullable    = false
+}
+
+variable "corda_rpc_user" {
+  description = "the rpc user name to attach to the corda node"
+  type        = string
+  nullable    = false
 }

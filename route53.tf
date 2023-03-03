@@ -23,6 +23,17 @@ resource "aws_route53_record" "proxy" {
   provider = aws.dns
 }
 
+resource "aws_route53_record" "corda_node" {
+  zone_id         = data.aws_route53_zone.public.zone_id
+  name            = local.corda_node_domain_name
+  type            = "CNAME"
+  ttl             = 300
+  records         = [aws_lb.corda-lb.dns_name]
+  allow_overwrite = true
+
+  provider = aws.dns
+}
+
 resource "aws_route53_record" "cert_validation" {
   for_each = {
     for v in aws_acm_certificate.public_wildcard.domain_validation_options : v.domain_name => {

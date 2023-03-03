@@ -20,8 +20,8 @@ resource "aws_ecs_task_definition" "rodo-title-proxy-task" {
 
   container_definitions = jsonencode([
     {
-      name   = "proxy"
-      image  = "${local.global_title_ecr_url}/rodo-title-proxy:${var.environment}_latest"
+      name  = "proxy"
+      image = "${local.global_title_ecr_url}/rodo-title-proxy:${var.environment}_latest"
 
       cpu    = 256
       memory = 512
@@ -496,6 +496,99 @@ resource "aws_ecs_service" "rodo-title-handler-svc" {
       aws_subnet.private-subnets[3].id
     ]
     security_groups = ["${aws_security_group.rodo-title-sg.id}"]
+  }
+
+  tags = local.default__tags
+}
+
+resource "aws_ecs_task_definition" "rodo_title_corda_node" {
+  family                   = "${local.node_slug}_corda_node"
+  network_mode             = "awsvpc"
+  requires_compatibilities = ["FARGATE"]
+  cpu                      = 1024
+  memory                   = 2048
+  execution_role_arn       = aws_iam_role.rodo-title-role.arn
+
+  runtime_platform {
+    operating_system_family = "LINUX"
+    cpu_architecture        = "X86_64"
+  }
+
+  container_definitions = jsonencode([
+    {
+      name   = "rodo-title-corda-node"
+      image  = "${local.global_title_ecr_url}/rodo-title-corda-node:${var.environment}"
+      cpu    = 1024
+      memory = 2048
+      portMappings = [
+        for host_port, container_port in local.corda_ports : {
+          hostPort      = host_port,
+          containerPort = container_port
+        }
+      ]
+      environment = [
+        {
+          name      = "MY_LEGAL_NAME",
+          valueFrom = aws_ssm_parameter.corda_my_legal_name.arn
+        },
+        {
+          name      = "MY_PUBLIC_ADDRESS",
+          valueFrom = aws_ssm_parameter.corda_my_public_address.arn
+        },
+        {
+          name      = "NETWORKMAP_URL",
+          valueFrom = aws_ssm_parameter.corda_networkmap_url.arn
+        },
+        {
+          name      = "DOORMAN_URL",
+          valueFrom = aws_ssm_parameter.corda_doorman_url.arn
+        },
+        {
+          name      = "NETWORK_TRUST_PASSWORD",
+          valueFrom = var.network_trust_password_secret_arn
+        },
+        {
+          name      = "MY_EMAIL_ADDRESS",
+          valueFrom = aws_ssm_parameter.corda_my_email_address.arn
+        },
+        {
+          name  = "SSHPORT",
+          value = "2222"
+        },
+        {
+          name      = "RPC_USER",
+          valueFrom = aws_ssm_parameter.corda_rpc_user.arn
+        },
+      ]
+      logConfiguration = {
+        logDriver = "awslogs"
+        options = {
+          awslogs-group         = aws_cloudwatch_log_group.rodo_title_corda_node.name
+          awslogs-region        = var.region
+          awslogs-stream-prefix = "ecs"
+        }
+      }
+    }
+  ])
+
+  tags = local.default__tags
+}
+
+resource "aws_ecs_service" "rodo_title_corda_node" {
+  name            = "${local.node_slug}-corda-node"
+  cluster         = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition = aws_ecs_task_definition.rodo_title_corda_node.id
+  desired_count   = 1
+  launch_type     = "FARGATE"
+
+
+  network_configuration {
+    subnets         = aws_subnet.private-subnets[*].id
+    security_groups = [aws_security_group.rodo-title-sg.id]
+  }
+
+  service_registries {
+    registry_arn = aws_service_discovery_service.corda.arn
   }
 
   tags = local.default__tags

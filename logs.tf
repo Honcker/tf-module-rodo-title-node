@@ -46,3 +46,11 @@ resource "aws_cloudwatch_log_group" "rodo-title-handler" {
       Name = "title-handler-log-group-${local.node_slug}"
   })
 }
+
+resource "aws_cloudwatch_log_group" "rodo_title_corda_node" {
+  name = "/fargate/service/rodo-title-corda-node-${local.node_slug}"
+  tags = merge(local.default__tags,
+    {
+      Name = "title-corda-node-log-group-${local.node_slug}"
+  })
+}

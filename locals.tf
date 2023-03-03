@@ -64,10 +64,32 @@ locals {
   }
 
   # CF / ACM
-  base_subdomain    = "${local.node_slug}.title.${data.aws_route53_zone.public.name}"
-  ui_domain_names   = { for cfe in local.entities_to_maintain : cfe => "${local.cloudfronted_entities_names[cfe]}-ui.${local.base_subdomain}" }
-  proxy_domain_name = "proxy.${local.base_subdomain}"
+  base_subdomain         = "${local.node_slug}.title.${data.aws_route53_zone.public.name}"
+  ui_domain_names        = { for cfe in local.entities_to_maintain : cfe => "${local.cloudfronted_entities_names[cfe]}-ui.${local.base_subdomain}" }
+  proxy_domain_name      = "proxy.${local.base_subdomain}"
+  corda_node_domain_name = "corda.${local.base_subdomain}"
 
   global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
 
+  corda_ports = {
+    # same as docker's -p 80:80
+    # host_port = container_port
+    10002 = 10002
+    10003 = 10003
+    10043 = 10043
+    # host_port is used in ecs and the nlb
+  }
+}
+
+locals {
+  corda_vpc_principals = [
+    "arn:aws:iam::999147121268:root",
+    "arn:aws:iam::753268391212:root",
+    "arn:aws:iam::801625722682:root",
+  ]
+}
+
+# corda_address is here because it was originally in tfvars, and looks like the port can vary ...
+locals {
+  corda_address = "${aws_instance.rodo-title-CorApp[0].private_ip}:${local.corda_ports["madison"]}"
 }

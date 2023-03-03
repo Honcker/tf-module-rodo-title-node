@@ -5,10 +5,9 @@ resource "random_password" "rodo-title-db-master" {
 }
 
 resource "aws_secretsmanager_secret" "rodo-title-db-password" {
-  name                    = "title-${local.node_slug}-db"
+  name_prefix             = "title-${local.node_slug}-db"
   recovery_window_in_days = 0
   tags                    = local.default__tags
-
 }
 
 resource "aws_secretsmanager_secret_version" "rodo-title-db-password" {

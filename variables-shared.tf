@@ -199,13 +199,6 @@ variable "opt_acm_cert_enabled" {
   default     = true
 }
 
-variable "opt_corda_vpc_endpoint_enabled" {
-  description = "optional switch to toggle corda VPC endpoint deployment"
-  # VPC endpoints are not free
-  type    = bool
-  default = true
-}
-
 variable "opt_alert_email_subscription_enabled" {
   # VPC endpoints are not free
   description = "optional switch to toggle corda VPC endpoint deployment"
@@ -216,4 +209,16 @@ variable "opt_alert_email_subscription_enabled" {
 variable "dns_public_domain" {
   description = "aws hosted zone name for public dns"
   default     = "rodo-infra.com"
+}
+
+variable "corda_networkmap_url" {
+  description = "the cenm nmap url"
+  type        = string
+  nullable    = false
+}
+
+variable "corda_doorman_url" {
+  description = "the cenm idman url"
+  type        = string
+  nullable    = false
 }

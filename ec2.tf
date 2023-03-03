@@ -54,29 +54,3 @@ resource "aws_instance" "rodo-title-windows-bastion" {
       instance_schedule = "yes"
   })
 }
-
-resource "aws_instance" "rodo-title-CorApp" {
-  count                  = 1
-  ami                    = data.aws_ami.rodo-title-ami.id
-  instance_type          = var.title_ec2_instance_type
-  subnet_id              = aws_subnet.private-subnets[0].id
-  key_name               = aws_key_pair.rodo-title-deployer.key_name
-  vpc_security_group_ids = [aws_security_group.rodo-title-sg.id]
-  iam_instance_profile   = aws_iam_instance_profile.rodo-title-profile.name
-  monitoring             = true
-  user_data              = <<EOF
-      #!/bin/bash
-      sudo apt update
-      sudo apt install -y amazon-linux-extras git openjdk-8-jre-headless gradle docker
-      sudo service docker start
-      sudo usermod -a -G docker ubuntu
-      sudo curl -L https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m) -o /usr/local/bin/docker-compose
-      sudo chmod +x /usr/local/bin/docker-compose
-    EOF
-  tags = merge(local.default__tags,
-    {
-      Name              = "${local.node_slug}-rodo-title-CorDapp"
-      alarms            = "rodo-title-${local.node_slug}"
-      instance_schedule = "yes"
-  })
-}
