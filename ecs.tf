@@ -522,8 +522,8 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
       memory = 2048
       portMappings = [
         for host_port, container_port in local.corda_ports : {
-          hostPort      = host_port,
-          containerPort = container_port
+          hostPort      = "${host_port}",
+          containerPort = "${container_port}"
         }
       ]
       environment = [
