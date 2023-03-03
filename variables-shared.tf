@@ -188,11 +188,6 @@ variable "instance_size_db_connections_map" {
   }
 }
 
-variable "corda_address" {
-  description = "The address of corda service"
-  type        = string
-}
-
 variable "opt_acm_cert_enabled" {
   description = "optional switch to toggle cloudfront deployment"
   type        = bool
