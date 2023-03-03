@@ -14,14 +14,19 @@ variable "bastion_windows_ami_id" {
   type        = string
 }
 
+# https://docs.r3.com/en/platform/corda/4.9/enterprise/node/setup/host-prereq.html#node-databases
 variable "db_engine" {
   description = "The database engine to use"
   type        = string
+  default     = "postgres"
 }
 
+# https://docs.r3.com/en/platform/corda/4.9/enterprise/node/setup/host-prereq.html#node-databases
+# aws rds describe-db-engine-versions --engine postgres --db-parameter-group-family postgres13 --query DBEngineVersions[].EngineVersion
 variable "db_engine_version" {
   description = "The engine version to use"
   type        = string
+  default     = "13.8"
 }
 
 variable "db_instance_class" {
