@@ -89,10 +89,10 @@ resource "aws_lb" "corda-lb" {
 }
 
 resource "aws_lb_listener" "corda-lb-listener" {
-  count          = length(aws_lb_target_group.corda[*])
+  for_each          = aws_lb_target_group.corda
 
   load_balancer_arn = aws_lb.corda-lb.arn
-  port              = aws_lb_target_group.corda[count.index].port
+  port              = each.value.port
   protocol          = "TCP"
 
   tags = merge(local.default__tags,
@@ -101,7 +101,7 @@ resource "aws_lb_listener" "corda-lb-listener" {
   })
   default_action {
     type = "forward"
-    target_group_arn = aws_lb_target_group.corda[count.index].arn
+    target_group_arn = each.value.arn
   }
 }
 
