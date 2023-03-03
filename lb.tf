@@ -110,7 +110,7 @@ resource "aws_lb_target_group" "corda" {
 
   name = "${local.node_slug}-corda-p${each.key}"
   target_type = "ip"
-  protocol = "tcp"
+  protocol = "TCP"
   port = each.key
   vpc_id = aws_vpc.rodo-title.id
 }
