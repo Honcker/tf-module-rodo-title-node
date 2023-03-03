@@ -8,9 +8,9 @@ output "windows-bastion-publicIP" {
   value       = aws_instance.rodo-title-windows-bastion[*].public_ip
 }
 
-output "CorDapp-instance-privateIP" {
-  description = "The private IP of the CorDapp instance"
-  value       = aws_instance.rodo-title-CorApp[*].private_ip
+output "Corda_hostname" {
+  description = "The hostname of the corda node"
+  value       = aws_route53_record.corda_node.fqdn
 }
 
 output "CorDapp-db-name" {

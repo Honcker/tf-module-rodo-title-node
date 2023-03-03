@@ -91,5 +91,5 @@ locals {
 
 # corda_address is here because it was originally in tfvars, and looks like the port can vary ...
 locals {
-  corda_address = "${aws_instance.rodo-title-CorApp[0].private_ip}:${local.corda_ports["madison"]}"
+  corda_address = aws_route53_record.corda_node.fqdn
 }
