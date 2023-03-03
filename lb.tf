@@ -89,7 +89,7 @@ resource "aws_lb" "corda-lb" {
 }
 
 resource "aws_lb_listener" "corda-lb-listener" {
-  count          = length(aws_lb_target_group.corda[*].arn)
+  count          = length(aws_lb_target_group.corda[*])
 
   load_balancer_arn = aws_lb.corda-lb.arn
   port              = aws_lb_target_group.corda[count.index].port
