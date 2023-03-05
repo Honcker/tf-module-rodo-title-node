@@ -74,3 +74,9 @@ variable "corda_rpc_user" {
   type        = string
   nullable    = false
 }
+
+variable "corda_rpc_user_password_secret_arn" {
+  description = "the arn of a secretsmanager secret containing the corda rpc user password"
+  type        = string
+  nullable    = false
+}

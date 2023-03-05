@@ -72,12 +72,9 @@ locals {
   global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
 
   corda_ports = {
-    # same as docker's -p 80:80
-    # host_port = container_port
-    10002 = 10002
-    10003 = 10003
-    10043 = 10043
-    # host_port is used in ecs and the nlb
+    p2p      = 10002
+    rpc      = 10003
+    rpcAdmin = 10043
   }
 }
 

@@ -556,6 +556,30 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
           name      = "RPC_USER",
           valueFrom = aws_ssm_parameter.corda_rpc_user.arn
         },
+        {
+          name      = "RPC_USER_PASSWORD",
+          valueFrom = var.corda_rpc_user_password_secret_arn
+        },
+        {
+          name      = "RPC_ADDRESS",
+          valueFrom = aws_ssm_parameter.corda_rpc_address.arn
+        },
+        {
+          name      = "RPC_ADMIN_ADDRESS",
+          valueFrom = aws_ssm_parameter.corda_rpc_admin_address.arn
+        },
+        {
+          name      = "DB_USER",
+          valueFrom = aws_ssm_parameter.corda_db_user.arn
+        },
+        {
+          name      = "DB_PASSWORD",
+          valueFrom = aws_secretsmanager_secret.rodo-title-db-password.arn
+        },
+        {
+          name      = "DB_CONNECTION_STRING",
+          valueFrom = aws_ssm_parameter.corda_db_connection_string.arn
+        },
       ]
       logConfiguration = {
         logDriver = "awslogs"

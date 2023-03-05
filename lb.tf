@@ -89,7 +89,7 @@ resource "aws_lb" "corda-lb" {
 }
 
 resource "aws_lb_listener" "corda-lb-listener" {
-  for_each          = aws_lb_target_group.corda
+  for_each = aws_lb_target_group.corda
 
   load_balancer_arn = aws_lb.corda-lb.arn
   port              = each.value.port
@@ -100,17 +100,17 @@ resource "aws_lb_listener" "corda-lb-listener" {
       Name = "rodo-title-corda-listener"
   })
   default_action {
-    type = "forward"
+    type             = "forward"
     target_group_arn = each.value.arn
   }
 }
 
 resource "aws_lb_target_group" "corda" {
-  for_each          = local.corda_ports
+  for_each = local.corda_ports
 
-  name = "${local.node_slug}-corda-p${each.key}"
+  name        = "${local.node_slug}-corda-${each.key}"
   target_type = "ip"
-  protocol = "TCP"
-  port = each.key
-  vpc_id = aws_vpc.rodo-title.id
+  protocol    = "TCP"
+  port        = each.value
+  vpc_id      = aws_vpc.rodo-title.id
 }
