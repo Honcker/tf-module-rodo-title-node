@@ -30,6 +30,7 @@ data "aws_iam_policy_document" "truststore" {
   statement {
     effect = "Allow"
     actions = [
+      "elasticfilesystem:Describe*",
       "elasticfilesystem:ClientMount",
       "elasticfilesystem:ClientWrite",
       "elasticfilesystem:ClientRootAccess"

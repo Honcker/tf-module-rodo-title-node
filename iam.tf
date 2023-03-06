@@ -61,6 +61,7 @@ resource "aws_iam_policy" "rodo-title-policy" {
       {
         Effect = "Allow"
         Action = [
+          "elasticfilesystem:Describe*",
           "elasticfilesystem:ClientMount",
           "elasticfilesystem:ClientWrite",
           "elasticfilesystem:ClientRootAccess"
