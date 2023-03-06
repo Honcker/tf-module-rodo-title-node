@@ -1,8 +1,8 @@
 
 data "archive_file" "truststore_archive" {
   type        = "zip"
-  source_dir  = "lambda/truststore"
-  output_path = "lambda/truststore.zip"
+  source_dir  = "${path.module}/lambda/truststore"
+  output_path = "${path.module}/lambda/truststore.zip"
 }
 
 data "aws_iam_policy_document" "truststore_trust_policy" {
