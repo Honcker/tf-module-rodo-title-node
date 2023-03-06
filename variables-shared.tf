@@ -217,3 +217,9 @@ variable "corda_doorman_url" {
   type        = string
   nullable    = false
 }
+
+variable "truststore_s3_uri" {
+  description = "the cenm network trust store s3 uri"
+  type        = string
+  nullable    = false
+}

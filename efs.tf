@@ -26,11 +26,11 @@ resource "aws_efs_mount_target" "private" {
   ]
 }
 
-resource "aws_efs_access_point" "cenm" {
+resource "aws_efs_access_point" "truststore" {
   file_system_id = aws_efs_file_system.corda.id
 
   root_directory {
-    path = "/"
+    path = "/opt/corda/certificates"
     creation_info {
       owner_gid   = 1000
       owner_uid   = 1000

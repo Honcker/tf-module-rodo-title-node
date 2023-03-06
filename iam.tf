@@ -57,6 +57,17 @@ resource "aws_iam_policy" "rodo-title-policy" {
         Action   = ["ses:SendEmail"]
         Effect   = "Allow"
         Resource = "*"
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "elasticfilesystem:ClientMount",
+          "elasticfilesystem:ClientWrite",
+          "elasticfilesystem:ClientRootAccess"
+        ]
+        Resource = [
+          aws_efs_file_system.corda.arn
+        ]
       }
     ]
   })

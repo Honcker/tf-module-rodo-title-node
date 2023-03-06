@@ -515,9 +515,14 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
   }
 
   volume {
-    name = "corda"
+    name = "truststore"
     efs_volume_configuration {
-      file_system_id = aws_efs_file_system.corda.id
+      file_system_id     = aws_efs_file_system.corda.id
+      transit_encryption = "ENABLED"
+      authorization_config {
+        access_point_id = aws_efs_access_point.truststore.id
+        iam             = "ENABLED"
+      }
     }
   }
 
@@ -528,7 +533,7 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
       cpu    = 1024
       memory = 2048
       portMappings = [
-        for p, v in local.corda_ports : {containerPort = v}
+        for p, v in local.corda_ports : { containerPort = v }
       ]
       environment = [
         {
@@ -590,7 +595,7 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
       ]
       mountPoints = [
         {
-          sourceVolume = "corda"
+          sourceVolume  = "truststore"
           containerPath = "/opt/corda/certificates"
         }
       ]
@@ -622,11 +627,11 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
   }
 
   dynamic "load_balancer" {
-    for_each       = aws_lb_target_group.corda
+    for_each = aws_lb_target_group.corda
     content {
       target_group_arn = load_balancer.value.arn
-      container_name = "rodo-title-corda-node"
-      container_port = load_balancer.value.port
+      container_name   = "rodo-title-corda-node"
+      container_port   = load_balancer.value.port
     }
   }
 
