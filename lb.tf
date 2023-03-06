@@ -108,7 +108,7 @@ resource "aws_lb_listener" "corda-lb-listener" {
 resource "aws_lb_target_group" "corda" {
   for_each = local.corda_ports
 
-  name        = "${local.node_slug}-corda-${each.key}"
+  name        = "${local.node_slug}-${each.key}"
   target_type = "ip"
   protocol    = "TCP"
   port        = each.value

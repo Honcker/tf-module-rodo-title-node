@@ -72,9 +72,9 @@ locals {
   global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
 
   corda_ports = {
-    p2p      = 10002
-    rpc      = 10003
-    rpcAdmin = 10043
+    p2p    = 10002
+    rpc    = 10003
+    rpcAdm = 10043
   }
 }
 
