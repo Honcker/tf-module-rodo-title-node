@@ -17,7 +17,7 @@ data "aws_iam_policy_document" "truststore_trust_policy" {
 }
 
 resource "aws_iam_role" "truststore" {
-  name               = "truststoreLambda"
+  name               = "${local.node_slug}_truststoreLambda"
   assume_role_policy = data.aws_iam_policy_document.truststore_trust_policy.json
 }
 
@@ -41,7 +41,7 @@ data "aws_iam_policy_document" "truststore" {
 }
 
 resource "aws_iam_policy" "truststore" {
-  name   = "truststoreLambdaPolicy"
+  name   = "${local.node_slug}_truststoreLambdaPolicy"
   policy = data.aws_iam_policy_document.truststore.json
 }
 
