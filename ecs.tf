@@ -508,6 +508,7 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
   cpu                      = 1024
   memory                   = 2048
   execution_role_arn       = aws_iam_role.rodo-title-role.arn
+  task_role_arn            = aws_iam_role.rodo-title-role.arn
 
   runtime_platform {
     operating_system_family = "LINUX"
