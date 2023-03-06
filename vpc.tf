@@ -19,7 +19,7 @@ resource "aws_vpc" "rodo-title" {
     # And there is no need to restrict the user any more than necessary.
 
     precondition {
-      condition     = (length(var.environment) + length(var.node_shortcode)) <= 21
+      condition     = (length(var.environment) + length(var.node_shortcode)) <= 23
       error_message = "The combined length of var.environment and var.node_shortcode has exceeded the maximum length that can be allowed."
     }
   }

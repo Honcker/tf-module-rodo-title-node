@@ -14,7 +14,7 @@ resource "aws_lb" "rodo-title-lb" {
 }
 
 resource "aws_lb_target_group" "rodo-title-proxy-tg-group" {
-  name = "${local.node_slug}-title-tg"
+  name = "${local.node_slug}-proxy"
   # 32 character limit for this name limits the number of characters for var.environment
   port        = "8081"
   protocol    = "HTTP"
@@ -113,4 +113,10 @@ resource "aws_lb_target_group" "corda" {
   protocol    = "TCP"
   port        = each.value
   vpc_id      = aws_vpc.rodo-title.id
+
+  tags = merge(local.default__tags,
+    {
+      desc = "lb target group for node ${local.node_name}'s instance of corda (port ${each.key})"
+  })
+
 }
