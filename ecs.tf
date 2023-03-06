@@ -514,6 +514,13 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
     cpu_architecture        = "X86_64"
   }
 
+  volume {
+    name = "corda"
+    efs_volume_configuration {
+      file_system_id = aws_efs_file_system.corda.id
+    }
+  }
+
   container_definitions = jsonencode([
     {
       name   = "rodo-title-corda-node"
@@ -580,6 +587,12 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
           name      = "DB_CONNECTION_STRING",
           valueFrom = aws_ssm_parameter.corda_db_connection_string.arn
         },
+      ]
+      mountPoints = [
+        {
+          sourceVolume = "corda"
+          containerPath = "/opt/corda/certificates"
+        }
       ]
       logConfiguration = {
         logDriver = "awslogs"
