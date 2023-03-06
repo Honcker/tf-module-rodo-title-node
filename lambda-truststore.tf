@@ -5,7 +5,7 @@ data "archive_file" "truststore_archive" {
   output_path = "lambda/truststore.zip"
 }
 
-data "aws_iam_policy_document" "truststore" {
+data "aws_iam_policy_document" "truststore_trust_policy" {
   statement {
     effect = "Allow"
     principals {
@@ -18,7 +18,7 @@ data "aws_iam_policy_document" "truststore" {
 
 resource "aws_iam_role" "truststore" {
   name               = "truststoreLambda"
-  assume_role_policy = data.aws_iam_policy_document.truststore.json
+  assume_role_policy = data.aws_iam_policy_document.truststore_trust_policy.json
 }
 
 resource "aws_iam_role_policy_attachment" "truststore" {
