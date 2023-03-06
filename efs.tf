@@ -1,7 +1,7 @@
 
 resource "aws_efs_file_system" "corda" {
   creation_token  = "${local.node_slug}-corda-file-system"
-  throughput_mode = "elastic" # usage based
+  throughput_mode = "bursting" # semi usage based, but supports access points better
 
   # R3 specifies this must not be encrypted
   encrypted = false #tfsec:ignore:aws-efs-enable-at-rest-encryption
