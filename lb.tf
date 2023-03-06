@@ -116,7 +116,6 @@ resource "aws_lb_target_group" "corda" {
 
   tags = merge(local.default__tags,
     {
-      desc = "lb target group for node ${local.node_name}'s instance of corda (port ${each.key})"
+      desc = "lb target group for corda port ${each.key} of node ${local.node_name}"
   })
-
 }
