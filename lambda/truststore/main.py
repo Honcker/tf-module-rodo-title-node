@@ -20,7 +20,7 @@ def lambda_handler(event, _):
 
     s3.download_file(Bucket=bucket, Key=key,
                      # This filepath and filename is always the same regardless of environment
-                     Filename='/opt/corda/certificates/network-root-truststore.jks')
+                     Filename='/mnt/opt/corda/certificates/network-root-truststore.jks')
 
     # confirm the file is there
-    os.listdir('/opt/corda/certificates')
+    os.listdir('/mnt/opt/corda/certificates')

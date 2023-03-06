@@ -66,7 +66,7 @@ resource "aws_lambda_function" "truststore" {
 
   file_system_config {
     arn              = aws_efs_access_point.truststore.arn
-    local_mount_path = "/opt/corda/certificates"
+    local_mount_path = "/mnt/opt/corda/certificates"
   }
 
   tracing_config {
