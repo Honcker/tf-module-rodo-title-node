@@ -80,6 +80,15 @@ resource "aws_security_group" "rodo-title-sg" {
   })
 }
 
+resource "aws_security_group_rule" "rodo_title_to_self" {
+  security_group_id        = aws_security_group.rodo-title-sg.id
+  type                     = "ingress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  source_security_group_id = aws_security_group.rodo-title-sg.id
+}
+
 resource "aws_security_group" "rodo-title-db-sg" {
   name        = "${local.node_slug}-title-db-sg"
   description = "Allow Rodo title sg inbound traffic"
