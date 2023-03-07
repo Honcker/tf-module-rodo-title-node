@@ -69,6 +69,18 @@ resource "aws_iam_policy" "rodo-title-policy" {
         Resource = [
           aws_efs_file_system.corda.arn
         ]
+      },
+      {
+        Effect = "Allow"
+        Action = [
+          "s3:GetObject",
+          "s3:ListBucket",
+          "s3:GetObjectAttributes"
+        ],
+        Resource = [
+          "arn:aws:s3:::${local.truststore_s3_bucket}/**",
+          "arn:aws:s3:::${local.truststore_s3_bucket}"
+        ]
       }
     ]
   })

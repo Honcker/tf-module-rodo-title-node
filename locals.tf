@@ -76,6 +76,8 @@ locals {
     rpc    = 10003
     rpcAdm = 10043
   }
+
+  truststore_s3_bucket = split("/", trim("s3://", var.truststore_s3_uri))[0]
 }
 
 locals {
