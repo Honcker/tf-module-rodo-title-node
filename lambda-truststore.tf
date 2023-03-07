@@ -80,4 +80,8 @@ resource "aws_lambda_invocation" "truststore" {
   input = jsonencode({
     truststore_s3_uri          = var.truststore_s3_uri
   })
+
+  depends_on = [
+    aws_iam_policy.rodo-title-policy
+  ]
 }
