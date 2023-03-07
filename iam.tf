@@ -118,6 +118,11 @@ resource "aws_iam_role" "rodo-title-role" {
   tags = local.default__tags
 }
 
+resource "aws_iam_role_policy_attachment" "fargate_managed" {
+  policy_arn = " AmazonECSTaskExecutionRolePolicy"
+  role       = aws_iam_role.rodo-title-role.name
+}
+
 resource "aws_iam_policy" "lambda_title_automation" {
   name        = "${local.node_slug}-ec2_rds_lambda_policy"
   path        = "/"
