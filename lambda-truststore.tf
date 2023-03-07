@@ -39,6 +39,18 @@ data "aws_iam_policy_document" "truststore" {
       aws_efs_file_system.corda.arn
     ]
   }
+  statement {
+    effect = "Allow"
+    actions = [
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:GetObjectAttributes"
+    ]
+    resources = [
+      "arn:aws:s3:::${local.truststore_s3_bucket}/**",
+      "arn:aws:s3:::${local.truststore_s3_bucket}"
+    ]
+  }
 }
 
 resource "aws_iam_policy" "truststore" {
@@ -78,10 +90,10 @@ resource "aws_lambda_function" "truststore" {
 resource "aws_lambda_invocation" "truststore" {
   function_name = aws_lambda_function.truststore.function_name
   input = jsonencode({
-    truststore_s3_uri          = var.truststore_s3_uri
+    truststore_s3_uri = var.truststore_s3_uri
   })
 
   depends_on = [
-    aws_iam_policy.rodo-title-policy
+    aws_iam_role_policy_attachment.truststore_policy
   ]
 }
