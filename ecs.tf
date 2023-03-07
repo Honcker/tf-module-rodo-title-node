@@ -637,11 +637,12 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
 }
 
 resource "aws_ecs_service" "rodo_title_corda_node" {
-  name            = "${local.node_slug}-corda-node"
-  cluster         = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition = aws_ecs_task_definition.rodo_title_corda_node.id
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                 = "${local.node_slug}-corda-node"
+  cluster              = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition      = aws_ecs_task_definition.rodo_title_corda_node.id
+  desired_count        = 1
+  launch_type          = "FARGATE"
+  force_new_deployment = true
 
 
   network_configuration {
