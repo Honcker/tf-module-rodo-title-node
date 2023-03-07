@@ -18,7 +18,7 @@ def lambda_handler(event, _):
     s3_uri = event['truststore_s3_uri']
 
     bucket = urlparse(s3_uri).netloc
-    key = urlparse(s3_uri).path
+    key = urlparse(s3_uri).path[1:]
 
     logger.info(f"{bucket} key: {key}")
     s3 = boto3.client(service_name='s3', region_name=os.environ['AWS_REGION'])
