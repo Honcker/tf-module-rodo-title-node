@@ -88,22 +88,22 @@ resource "aws_lb" "corda-lb" {
   tags                             = local.default__tags
 }
 
-#resource "aws_lb_listener" "corda-lb-listener" {
-#  for_each = aws_lb_target_group.corda
-#
-#  load_balancer_arn = aws_lb.corda-lb.arn
-#  port              = each.value.port
-#  protocol          = "TCP"
-#
-#  tags = merge(local.default__tags,
-#    {
-#      Name = "rodo-title-corda-listener"
-#  })
-#  default_action {
-#    type             = "forward"
-#    target_group_arn = each.value.arn
-#  }
-#}
+resource "aws_lb_listener" "corda-lb-listener" {
+  for_each = aws_lb_target_group.corda
+
+  load_balancer_arn = aws_lb.corda-lb.arn
+  port              = each.value.port
+  protocol          = "TCP"
+
+  tags = merge(local.default__tags,
+    {
+      Name = "rodo-title-corda-listener"
+  })
+  default_action {
+    type             = "forward"
+    target_group_arn = each.value.arn
+  }
+}
 
 resource "aws_lb_target_group" "corda" {
   for_each = local.corda_ports

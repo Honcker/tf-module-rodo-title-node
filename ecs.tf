@@ -627,14 +627,14 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
     security_groups = [aws_security_group.rodo-title-sg.id]
   }
 
-#  dynamic "load_balancer" {
-#    for_each = aws_lb_target_group.corda
-#    content {
-#      target_group_arn = load_balancer.value.arn
-#      container_name   = "rodo-title-corda-node"
-#      container_port   = load_balancer.value.port
-#    }
-#  }
+  dynamic "load_balancer" {
+    for_each = aws_lb_target_group.corda
+    content {
+      target_group_arn = load_balancer.value.arn
+      container_name   = "rodo-title-corda-node"
+      container_port   = load_balancer.value.port
+    }
+  }
 
   service_registries {
     registry_arn = aws_service_discovery_service.corda.arn

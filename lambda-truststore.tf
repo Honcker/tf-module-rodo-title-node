@@ -93,6 +93,10 @@ resource "aws_lambda_invocation" "truststore" {
     truststore_s3_uri = var.truststore_s3_uri
   })
 
+  triggers = {
+    always = timestamp()
+  }
+
   depends_on = [
     aws_iam_role_policy_attachment.truststore_policy
   ]
