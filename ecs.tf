@@ -548,11 +548,7 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
       portMappings = [
         for p, v in local.corda_ports : { containerPort = v }
       ]
-      environment = [
-        {
-          name  = "ACCEPT_LICENSE",
-          value = "Y"
-        },
+      secrets = [
         {
           name      = "MY_LEGAL_NAME",
           valueFrom = aws_ssm_parameter.corda_my_legal_name.arn
@@ -576,10 +572,6 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
         {
           name      = "MY_EMAIL_ADDRESS",
           valueFrom = aws_ssm_parameter.corda_my_email_address.arn
-        },
-        {
-          name  = "SSHPORT",
-          value = "2222"
         },
         {
           name      = "RPC_USER",
@@ -609,6 +601,16 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
           name      = "corda_dataSourceProperties_dataSource_url",
           valueFrom = aws_ssm_parameter.corda_db_connection_string.arn
         },
+      ]
+      environment = [
+        {
+          name  = "ACCEPT_LICENSE",
+          value = "Y"
+        },
+        {
+          name  = "SSHPORT",
+          value = "2222"
+        }
       ]
       mountPoints = [
         {

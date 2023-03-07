@@ -39,19 +39,14 @@ resource "aws_iam_policy" "rodo-title-policy" {
         Resource = "*"
       },
       {
-        Sid      = "GetSSMParameters"
-        Action   = "ssm:GetParameters"
-        Effect   = "Allow"
-        Resource = "${local.params_envprefix}/*"
-      },
-      {
-        Sid    = "GetSecretsManagerSecrets"
-        Action = "secretsmanager:GetSecretValue"
-        Effect = "Allow"
-        Resource = [
-          var.network_trust_password_secret_arn,
-          aws_secretsmanager_secret.rodo-title-db-password.arn
+        Sid      = "ECSSecretsAsEnvVars"
+        Action   = [
+          "ssm:GetParameters",
+          "secretsmanager:GetSecretValue",
+          "kms:Decrypt"
         ]
+        Effect   = "Allow"
+        Resource = "*"
       },
       {
         Action   = ["ses:SendEmail"]
