@@ -28,4 +28,4 @@ def lambda_handler(event, _):
                      Filename='/mnt/certificates/network-root-truststore.jks')
 
     # confirm the file is there
-    os.listdir('/mnt/certificates')
+    logger.info(os.listdir('/mnt/certificates'))
