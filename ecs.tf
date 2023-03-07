@@ -527,6 +527,18 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
     }
   }
 
+  volume {
+    name = "logs"
+    efs_volume_configuration {
+      file_system_id     = aws_efs_file_system.corda.id
+      transit_encryption = "ENABLED"
+      authorization_config {
+        access_point_id = aws_efs_access_point.corda_logs.id
+        iam             = "ENABLED"
+      }
+    }
+  }
+
   container_definitions = jsonencode([
     {
       name   = "rodo-title-corda-node"
@@ -598,6 +610,10 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
         {
           sourceVolume  = "truststore"
           containerPath = "/opt/corda/certificates"
+        },
+        {
+          sourceVolume  = "logs"
+          containerPath = "/opt/corda/logs"
         }
       ]
       logConfiguration = {

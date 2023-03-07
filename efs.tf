@@ -46,3 +46,24 @@ resource "aws_efs_access_point" "truststore" {
     aws_efs_mount_target.private
   ]
 }
+
+resource "aws_efs_access_point" "corda_logs" {
+  file_system_id = aws_efs_file_system.corda.id
+
+  root_directory {
+    path = "/opt/corda/logs"
+    creation_info {
+      owner_gid   = 1000
+      owner_uid   = 1000
+      permissions = "0777"
+    }
+  }
+  posix_user {
+    gid = 1000
+    uid = 1000
+  }
+
+  depends_on = [
+    aws_efs_mount_target.private
+  ]
+}
