@@ -42,9 +42,14 @@ data "aws_iam_policy_document" "truststore" {
   statement {
     effect = "Allow"
     actions = [
-      "s3:*"
+      "s3:GetObject",
+      "s3:ListBucket",
+      "s3:GetObjectAttributes"
     ]
-    resources = ["*"]
+    resources = [
+      "arn:aws:s3:::${local.truststore_s3_bucket}/**",
+      "arn:aws:s3:::${local.truststore_s3_bucket}"
+    ]
   }
 }
 
