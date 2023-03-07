@@ -119,7 +119,7 @@ resource "aws_iam_role" "rodo-title-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "fargate_managed" {
-  policy_arn = "arn:aws:iam::aws:policy/AmazonECSTaskExecutionRolePolicy"
+  policy_arn = "arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy"
   role       = aws_iam_role.rodo-title-role.name
 }
 
