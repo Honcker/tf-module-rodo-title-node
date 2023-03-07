@@ -41,4 +41,8 @@ resource "aws_efs_access_point" "truststore" {
     gid = 1000
     uid = 1000
   }
+
+  depends_on = [
+    aws_efs_mount_target.private
+  ]
 }
