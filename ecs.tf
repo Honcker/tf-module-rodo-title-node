@@ -550,6 +550,10 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
       ]
       environment = [
         {
+          name  = "ACCEPT_LICENSE",
+          value = "Y"
+        },
+        {
           name      = "MY_LEGAL_NAME",
           valueFrom = aws_ssm_parameter.corda_my_legal_name.arn
         },
