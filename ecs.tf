@@ -565,10 +565,10 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
           name      = "DOORMAN_URL",
           valueFrom = aws_ssm_parameter.corda_doorman_url.arn
         },
-        {
-          name      = "NETWORK_TRUST_PASSWORD",
-          valueFrom = var.network_trust_password_secret_arn
-        },
+#        {
+#          name      = "NETWORK_TRUST_PASSWORD",
+#          valueFrom = var.network_trust_password_secret_arn
+#        },
         {
           name      = "MY_EMAIL_ADDRESS",
           valueFrom = aws_ssm_parameter.corda_my_email_address.arn
