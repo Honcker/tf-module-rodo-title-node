@@ -89,7 +89,7 @@ resource "aws_security_group_rule" "rodo_title_to_self" {
   source_security_group_id = aws_security_group.rodo-title-sg.id
 }
 
-resource "aws_security_group_rule" "rodo_title_to_self" {
+resource "aws_security_group_rule" "rodo_title_corda_node_ports_in" {
   for_each = local.corda_ports
 
   security_group_id = aws_security_group.rodo-title-sg.id
