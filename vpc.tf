@@ -28,7 +28,7 @@ resource "aws_vpc" "rodo-title" {
 data "aws_availability_zones" "all" {}
 
 resource "aws_subnet" "public-subnets" {
-  count             = 2
+  count             = 4
   cidr_block        = cidrsubnet(aws_vpc.rodo-title.cidr_block, 8, count.index * 8 + 2)
   vpc_id            = aws_vpc.rodo-title.id
   availability_zone = data.aws_availability_zones.all.names[count.index]
