@@ -1,5 +1,6 @@
 from urllib.parse import urlparse
 import logging
+import shutil
 import boto3
 import os
 
@@ -26,6 +27,7 @@ def lambda_handler(event, _):
     s3.download_file(Bucket=bucket, Key=key,
                      # This filepath and filename is always the same regardless of environment
                      Filename='/mnt/certificates/network-root-truststore.jks')
+    shutil.copyfile('/mnt/certificates/network-root-truststore.jks', '/mnt/certificates/truststore.jks')
 
     # confirm the file is there
     logger.info(os.listdir('/mnt/certificates'))
