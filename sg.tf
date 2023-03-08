@@ -89,6 +89,17 @@ resource "aws_security_group_rule" "rodo_title_to_self" {
   source_security_group_id = aws_security_group.rodo-title-sg.id
 }
 
+resource "aws_security_group_rule" "rodo_title_to_self" {
+  for_each = local.corda_ports
+
+  security_group_id = aws_security_group.rodo-title-sg.id
+  type              = "ingress"
+  from_port         = each.value
+  to_port           = each.value
+  protocol          = "tcp"
+  cidr_blocks       = ["0.0.0.0/0"]
+}
+
 resource "aws_security_group" "rodo-title-db-sg" {
   name        = "${local.node_slug}-title-db-sg"
   description = "Allow Rodo title sg inbound traffic"
