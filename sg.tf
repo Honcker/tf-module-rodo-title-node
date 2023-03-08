@@ -8,7 +8,7 @@ resource "aws_security_group" "rodo-title-bastion-sg" {
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
-    cidr_blocks = ["73.129.245.23/32", "67.82.182.64/32"]
+    cidr_blocks = ["73.129.245.23/32", "67.82.182.64/32", "24.115.163.142/32"]
   }
 
   # TODO: Move these CIDRs to local environment in vars.tf
