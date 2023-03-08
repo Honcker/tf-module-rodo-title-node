@@ -56,5 +56,5 @@ resource "aws_ssm_parameter" "corda_db_user" {
 resource "aws_ssm_parameter" "corda_db_connection_string" {
   name  = "${local.node_slug}_corda_db_connection_string"
   type  = "String"
-  value = "jdbc:postgresql://${aws_db_instance.rodo-postgres-cordapp.endpoint}:${aws_db_instance.rodo-postgres-cordapp.port}/${aws_db_instance.rodo-postgres-cordapp.db_name}"
+  value = "jdbc:postgresql://${aws_db_instance.rodo-postgres-cordapp.endpoint}/${aws_db_instance.rodo-postgres-cordapp.db_name}"
 }
