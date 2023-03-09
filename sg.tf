@@ -47,32 +47,8 @@ resource "aws_security_group" "rodo-title-bastion-sg" {
 
 resource "aws_security_group" "rodo-title-sg" {
   name        = "${local.node_slug}-title-sg"
-  description = "Allow TLS inbound traffic"
+  description = "Allow TLS traffic"
   vpc_id      = aws_vpc.rodo-title.id
-
-  ingress {
-    description = "Aall TCP traffic to VPC"
-    from_port   = 0
-    to_port     = 65535
-    protocol    = "tcp"
-    cidr_blocks = [aws_vpc.rodo-title.cidr_block]
-  }
-
-  ingress {
-    description     = "SSH Access from Bastion Host"
-    from_port       = 22
-    to_port         = 22
-    protocol        = "tcp"
-    security_groups = [aws_security_group.rodo-title-bastion-sg.id]
-  }
-
-  egress {
-    from_port        = 0
-    to_port          = 0
-    protocol         = "-1"
-    cidr_blocks      = ["0.0.0.0/0"]
-    ipv6_cidr_blocks = ["::/0"]
-  }
 
   tags = merge(local.default__tags,
     {
@@ -80,7 +56,18 @@ resource "aws_security_group" "rodo-title-sg" {
   })
 }
 
-resource "aws_security_group_rule" "rodo_title_to_self" {
+resource "aws_security_group_rule" "rodo_title_from_vpc" {
+  description       = "allow sg ingress from vpc"
+  security_group_id = aws_security_group.rodo-title-sg.id
+  type              = "ingress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = [aws_vpc.rodo-title.cidr_block]
+}
+
+resource "aws_security_group_rule" "rodo_title_from_self" {
+  description              = "allow sg ingress from self"
   security_group_id        = aws_security_group.rodo-title-sg.id
   type                     = "ingress"
   from_port                = 0
@@ -89,9 +76,31 @@ resource "aws_security_group_rule" "rodo_title_to_self" {
   source_security_group_id = aws_security_group.rodo-title-sg.id
 }
 
+resource "aws_security_group_rule" "rodo_title_to_self" {
+  description              = "allow sg egress to self"
+  security_group_id        = aws_security_group.rodo-title-sg.id
+  type                     = "egress"
+  from_port                = 0
+  to_port                  = 0
+  protocol                 = "-1"
+  source_security_group_id = aws_security_group.rodo-title-sg.id
+}
+
+resource "aws_security_group_rule" "rodo_title_to_all" {
+  description       = "allow sg egress to self"
+  security_group_id = aws_security_group.rodo-title-sg.id
+  type              = "egress"
+  from_port         = 0
+  to_port           = 0
+  protocol          = "-1"
+  cidr_blocks       = ["0.0.0.0/0"]
+  ipv6_cidr_blocks  = ["::/0"]
+}
+
 resource "aws_security_group_rule" "rodo_title_corda_node_ports_in" {
   for_each = local.corda_ports
 
+  description       = "allow ${each.value} in from all"
   security_group_id = aws_security_group.rodo-title-sg.id
   type              = "ingress"
   from_port         = each.value
