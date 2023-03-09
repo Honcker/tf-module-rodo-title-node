@@ -72,9 +72,9 @@ locals {
   global_title_ecr_url = "889585473663.dkr.ecr.us-west-2.amazonaws.com"
 
   corda_ports = {
-    p2p    = 20002
-    rpc    = 20003
-    rpcAdm = 20043
+    p2p    = 10200
+    rpc    = 10201
+    rpcAdm = 10202
   }
 
   truststore_s3_bucket = split("/", trim(var.truststore_s3_uri, "s3://"))[0]
