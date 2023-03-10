@@ -38,13 +38,13 @@ resource "aws_ssm_parameter" "corda_rpc_user" {
 resource "aws_ssm_parameter" "corda_rpc_address" {
   name  = "${local.node_slug}_corda_rpc_address"
   type  = "String"
-  value = "${aws_route53_record.corda_node.fqdn}:${local.corda_ports["rpc"]}"
+  value = "0.0.0.0:${local.corda_ports["rpc"]}"
 }
 
 resource "aws_ssm_parameter" "corda_rpc_admin_address" {
   name  = "${local.node_slug}_corda_rpc_admin_address"
   type  = "String"
-  value = "${aws_route53_record.corda_node.fqdn}:${local.corda_ports["rpcAdm"]}"
+  value = "0.0.0.0:${local.corda_ports["rpcAdm"]}"
 }
 
 resource "aws_ssm_parameter" "corda_db_user" {
