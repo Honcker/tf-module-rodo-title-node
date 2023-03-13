@@ -643,6 +643,7 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
   desired_count        = 1
   launch_type          = "FARGATE"
   force_new_deployment = true
+  health_check_grace_period_seconds = 120
 
 
   network_configuration {
