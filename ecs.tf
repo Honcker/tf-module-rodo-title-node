@@ -650,7 +650,7 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
   deployment_maximum_percent         = 100
   launch_type                        = "FARGATE"
   force_new_deployment               = true
-  health_check_grace_period_seconds  = 120
+  health_check_grace_period_seconds  = 180
 
 
   network_configuration {
