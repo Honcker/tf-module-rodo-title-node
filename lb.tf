@@ -113,4 +113,9 @@ resource "aws_lb_target_group" "corda" {
   protocol    = "TCP"
   port        = each.value
   vpc_id      = aws_vpc.rodo-title.id
+
+  depends_on = [
+    # Avoids Error: The target group with targetGroupArn does not have an associated load balancer.
+    aws_lb.corda-lb
+  ]
 }
