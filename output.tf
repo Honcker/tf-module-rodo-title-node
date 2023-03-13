@@ -47,6 +47,7 @@ output "route53_entries" {
     ui           = aws_route53_record.ui
     proxy        = aws_route53_record.proxy
     ui_full_list = aws_route53_record.ui[*]
+    corda        = aws_route53_record.corda_node
   }
 }
 
