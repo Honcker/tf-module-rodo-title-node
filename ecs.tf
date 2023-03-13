@@ -642,7 +642,6 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
   task_definition                    = aws_ecs_task_definition.rodo_title_corda_node.id
   desired_count                      = 1
   count                              = 1
-  deployment_minimum_healthy_percent = 100
   deployment_maximum_percent         = 100
   launch_type                        = "FARGATE"
   force_new_deployment               = true
