@@ -65,11 +65,12 @@ resource "aws_ecs_task_definition" "rodo-title-proxy-task" {
 }
 
 resource "aws_ecs_service" "rodo-title-proxy-svc" {
-  name            = "${local.node_slug}-proxy"
-  cluster         = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition = aws_ecs_task_definition.rodo-title-proxy-task.id
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                 = "${local.node_slug}-proxy"
+  cluster              = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition      = aws_ecs_task_definition.rodo-title-proxy-task.id
+  force_new_deployment = true
+  desired_count        = 1
+  launch_type          = "FARGATE"
 
   network_configuration {
     subnets = [
@@ -150,11 +151,12 @@ resource "aws_ecs_task_definition" "rodo-title-server-task" {
 }
 
 resource "aws_ecs_service" "rodo-title-server-svc" {
-  name            = "${local.node_slug}-server"
-  cluster         = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition = aws_ecs_task_definition.rodo-title-server-task.id
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                 = "${local.node_slug}-server"
+  cluster              = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition      = aws_ecs_task_definition.rodo-title-server-task.id
+  force_new_deployment = true
+  desired_count        = 1
+  launch_type          = "FARGATE"
 
 
   network_configuration {
@@ -232,11 +234,12 @@ resource "aws_ecs_task_definition" "rodo-title-storage-task" {
 }
 
 resource "aws_ecs_service" "rodo-title-storage-svc" {
-  name            = "${local.node_slug}-storage"
-  cluster         = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition = aws_ecs_task_definition.rodo-title-storage-task.id
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                 = "${local.node_slug}-storage"
+  cluster              = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition      = aws_ecs_task_definition.rodo-title-storage-task.id
+  force_new_deployment = true
+  desired_count        = 1
+  launch_type          = "FARGATE"
 
 
   network_configuration {
@@ -326,11 +329,12 @@ resource "aws_ecs_task_definition" "rodo-title-nft-task" {
 }
 
 resource "aws_ecs_service" "rodo-title-nft-svc" {
-  name            = "${local.node_slug}-nft"
-  cluster         = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition = aws_ecs_task_definition.rodo-title-nft-task.id
-  desired_count   = 1
-  launch_type     = "FARGATE"
+  name                 = "${local.node_slug}-nft"
+  cluster              = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition      = aws_ecs_task_definition.rodo-title-nft-task.id
+  force_new_deployment = true
+  desired_count        = 1
+  launch_type          = "FARGATE"
 
   network_configuration {
     subnets = [
