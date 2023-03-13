@@ -74,7 +74,7 @@ locals {
   corda_ports = {
     p2p    = 10200
     rpc    = 10201
-    rpcAdm = 10202
+    # rpcAdm = 10202
   }
 
   truststore_s3_bucket = split("/", trim(var.truststore_s3_uri, "s3://"))[0]
