@@ -44,7 +44,7 @@ resource "aws_ssm_parameter" "corda_rpc_address" {
 resource "aws_ssm_parameter" "corda_rpc_admin_address" {
   name  = "${local.node_slug}_corda_rpc_admin_address"
   type  = "String"
-  value = "0.0.0.0:${local.corda_ports["rpcAdm"]}"
+  value = "0.0.0.0:${local.corda_rpcAdm_port}"
 }
 
 resource "aws_ssm_parameter" "corda_db_user" {
