@@ -72,7 +72,7 @@ resource "aws_route_table" "rodo-title-public" {
 }
 
 resource "aws_route_table_association" "rodo-title-public-routes" {
-  count          = 2
+  count          = length(aws_subnet.public-subnets.*.id)
   subnet_id      = element(aws_subnet.public-subnets.*.id, count.index)
   route_table_id = aws_route_table.rodo-title-public.id
 }
