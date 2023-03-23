@@ -136,6 +136,16 @@ resource "aws_ecs_task_definition" "rodo-title-server-task" {
           value = local.corda_address
         }
       ]
+      secrets = [
+        {
+          name      = "CORDA_NODE_RPC_USER",
+          valueFrom = aws_ssm_parameter.corda_rpc_user.arn
+        },
+        {
+          name      = "CORDA_NODE_RPC_PASSWORD",
+          valueFrom = var.corda_rpc_user_password_secret_arn
+        },
+      ]
       logConfiguration = {
         logDriver = "awslogs"
         options = {
