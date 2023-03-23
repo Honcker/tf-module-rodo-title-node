@@ -697,4 +697,9 @@ resource "aws_ecs_service" "rodo_title_corda_node" {
   }
 
   tags = local.default__tags
+
+  depends_on = [
+    # if the corda node starts without the trust store it can't register with the network
+    aws_lambda_invocation.truststore
+  ]
 }
