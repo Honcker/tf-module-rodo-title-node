@@ -92,4 +92,5 @@ locals {
 # corda_address is here because it was originally in tfvars, and looks like the port can vary ...
 locals {
   corda_address = aws_ssm_parameter.corda_my_public_address.value
+  corda_rpc_address = "${aws_route53_record.corda_node.fqdn}:${local.corda_ports["rpc"]}"
 }

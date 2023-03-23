@@ -134,7 +134,7 @@ resource "aws_ecs_task_definition" "rodo-title-server-task" {
         },
         {
           name  = "CORDA_NODE_ADDRESS"
-          value = local.corda_address
+          value = local.corda_rpc_address
         }
       ]
       secrets = [
