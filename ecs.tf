@@ -71,6 +71,7 @@ resource "aws_ecs_service" "rodo-title-proxy-svc" {
   force_new_deployment = true
   desired_count        = 1
   launch_type          = "FARGATE"
+  propagate_tags       = "NONE"
 
   network_configuration {
     subnets = [
@@ -167,6 +168,7 @@ resource "aws_ecs_service" "rodo-title-server-svc" {
   force_new_deployment = true
   desired_count        = 1
   launch_type          = "FARGATE"
+  propagate_tags       = "NONE"
 
 
   network_configuration {
@@ -250,6 +252,7 @@ resource "aws_ecs_service" "rodo-title-storage-svc" {
   force_new_deployment = true
   desired_count        = 1
   launch_type          = "FARGATE"
+  propagate_tags       = "NONE"
 
 
   network_configuration {
@@ -345,6 +348,7 @@ resource "aws_ecs_service" "rodo-title-nft-svc" {
   force_new_deployment = true
   desired_count        = 1
   launch_type          = "FARGATE"
+  propagate_tags       = "NONE"
 
   network_configuration {
     subnets = [
@@ -427,6 +431,7 @@ resource "aws_ecs_service" "rodo-title-camunda-svc" {
   task_definition = aws_ecs_task_definition.rodo-title-camunda-task.id
   desired_count   = 1
   launch_type     = "FARGATE"
+  propagate_tags  = "NONE"
 
 
   network_configuration {
@@ -484,7 +489,7 @@ resource "aws_ecs_task_definition" "rodo-title-handler-task" {
         logDriver = "awslogs"
         options = {
           awslogs-group         = aws_cloudwatch_log_group.rodo-title-handler.name
-          awslogs-region        = "${var.region}"
+          awslogs-region        = var.region
           awslogs-stream-prefix = "ecs"
         }
       }
@@ -500,6 +505,7 @@ resource "aws_ecs_service" "rodo-title-handler-svc" {
   task_definition = aws_ecs_task_definition.rodo-title-handler-task.id
   desired_count   = 1
   launch_type     = "FARGATE"
+  propagate_tags  = "NONE"
 
 
   network_configuration {
@@ -651,14 +657,15 @@ resource "aws_ecs_task_definition" "rodo_title_corda_node" {
 }
 
 resource "aws_ecs_service" "rodo_title_corda_node" {
-  name                               = "${local.node_slug}-corda-node"
-  cluster                            = aws_ecs_cluster.rodo-title-cluster.id
-  task_definition                    = aws_ecs_task_definition.rodo_title_corda_node.id
-  desired_count                      = 1
-  count                              = 1
-  launch_type                        = "FARGATE"
-  force_new_deployment               = true
-  health_check_grace_period_seconds  = 240
+  name                              = "${local.node_slug}-corda-node"
+  cluster                           = aws_ecs_cluster.rodo-title-cluster.id
+  task_definition                   = aws_ecs_task_definition.rodo_title_corda_node.id
+  desired_count                     = 1
+  count                             = 1
+  launch_type                       = "FARGATE"
+  force_new_deployment              = true
+  health_check_grace_period_seconds = 240
+  propagate_tags                    = "NONE"
 
 
   network_configuration {

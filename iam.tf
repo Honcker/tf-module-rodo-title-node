@@ -39,8 +39,8 @@ resource "aws_iam_policy" "rodo-title-policy" {
         Resource = "*"
       },
       {
-        Sid      = "ECSSecretsAsEnvVars"
-        Action   = [
+        Sid = "ECSSecretsAsEnvVars"
+        Action = [
           "ssm:GetParameters",
           "secretsmanager:GetSecretValue",
           "kms:Decrypt"
