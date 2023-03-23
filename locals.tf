@@ -37,11 +37,11 @@ locals {
 
   # secrets stored in parameters via github secrets + update-secrets pipeline
   nft_secret_params = {
-    wallet_address    = "rodo-title/${local.node_slug}/NFT_CONTRACT_ADDRESS"
-    wallet_secret     = "rodo-title/${local.node_slug}/NFT_WALLET_PRIVATE_KEY"
-    pinata_api_key    = "rodo-title/${local.node_slug}/NFT_PINATA_API_KEY"
-    pinata_api_secret = "rodo-title/${local.node_slug}/NFT_PINATA_API_SECRET"
-    pinata_jwt        = "rodo-title/${local.node_slug}/NFT_PINATA_JWT"
+    wallet_address    = "rodo-title/${var.environment}/NFT_CONTRACT_ADDRESS"
+    wallet_secret     = "rodo-title/${var.environment}/NFT_WALLET_PRIVATE_KEY"
+    pinata_api_key    = "rodo-title/${var.environment}/NFT_PINATA_API_KEY"
+    pinata_api_secret = "rodo-title/${var.environment}/NFT_PINATA_API_SECRET"
+    pinata_jwt        = "rodo-title/${var.environment}/NFT_PINATA_JWT"
   }
 
   params_envprefix = "arn:aws:ssm:${var.region}:${data.aws_caller_identity.current.account_id}:parameter"
